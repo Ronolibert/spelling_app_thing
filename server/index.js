@@ -14,6 +14,9 @@ app.set('port', nconf.get('PORT') || 5000);
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get('*', (req, res) => {
+  console.log('i see you');
+});
 app.listen(nconf.get('PORT'), () => {
   console.log(`Listening on port: ${nconf.get('PORT')}`);
   console.log(`Running in ${process.env.NODE_ENV}`);
