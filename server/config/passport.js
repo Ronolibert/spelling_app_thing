@@ -24,8 +24,12 @@ module.exports = passport => {
             console.log('I al;ready exist', user);
             done(null, user);
           } else {
+            const userId = uuidv4();
+            const token = jwt.sign(userId, nconf.get('JWT_SECRET'));
+
             User.create(
               {
+                token,
                 name: profile.displayName,
                 email: profile.emails[0].value,
                 googleId: profile.id

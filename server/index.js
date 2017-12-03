@@ -5,6 +5,8 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const { jwtAuthentication } = require('./middleware');
+
 require('./initialize');
 require('./config/passport')(passport);
 
@@ -14,6 +16,8 @@ const rootDir = path.join(__dirname, '../');
 
 app.set('port', nconf.get('PORT') || 5000);
 
+app.use(passport.initialize());
+
 // Connect to MongoDB
 mongoose.connect(nconf.get('mongoURI'), () => {
   console.log('connected to mongo');
@@ -22,6 +26,7 @@ mongoose.connect(nconf.get('mongoURI'), () => {
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(jwtAuthentication);
 // ROUTES
 app.get(
   '/auth/google',
@@ -34,13 +39,24 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google'),
   (req, res) => {
-    console.log('o ye', req);
-    res.send('this happened');
+    const { token } = req.user;
+
+    // Make it a 5-year cookie
+    const cookieExpirationDate = new Date(
+      Date.now() + 2 * 365 * 24 * 60 * 60 * 1000
+    );
+
+    res.cookie(nconf.get('AUTH_TOKEN_KEY'), token, {
+      expires: cookieExpirationDate
+    });
+
+    // TODO: fic this later
+    return res.redirect('http://localhost:50673');
   }
 );
 
 app.get('*', (req, res) => {
-  console.log('i see you');
+  res.sendFile(path.join(rootDir, 'build/index.html'));
 });
 
 app.listen(nconf.get('PORT'), () => {
