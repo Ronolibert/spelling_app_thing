@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import Cookies from 'cookies-js';
 import logo from './logo.svg';
 import './App.css';
 import GoogleButton from './components/GoogleButton';
 
 class App extends Component {
+  logout = () => {
+    document.cookie = `${encodeURIComponent(
+      'spelly-token'
+    )}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    console.log('logged out son');
+  };
   render() {
     return (
       <div className="App">
@@ -15,6 +22,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <GoogleButton />
+        <button onClick={this.logout}>Logout</button>
       </div>
     );
   }
