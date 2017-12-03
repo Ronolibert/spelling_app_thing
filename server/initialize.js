@@ -5,5 +5,5 @@ if (typeof process.env.NODE_ENV === 'undefined') {
 }
 
 const DEFAULT_CONFIG = './server/config/defaults.json';
-
-nconf.file('defaults', DEFAULT_CONFIG);
+const PRIVATE_CONFIG = './server/config/private.json';
+nconf.file('private', PRIVATE_CONFIG).file('defaults', DEFAULT_CONFIG);

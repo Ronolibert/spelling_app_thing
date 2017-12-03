@@ -1,9 +1,11 @@
 const path = require('path');
 const express = require('express');
 const nconf = require('nconf');
+const passport = require('passport');
 const bodyParser = require('body-parser');
 
 require('./initialize');
+require('./config/passport')(passport);
 
 const app = express();
 
@@ -14,10 +16,28 @@ app.set('port', nconf.get('PORT') || 5000);
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// ROUTES
+app.get(
+  '/auth/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email']
+  })
+);
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google'),
+  (req, res) => {
+    console.log('o ye', req);
+    res.send('this happened');
+  }
+);
+
 app.get('*', (req, res) => {
   console.log('i see you');
 });
+
 app.listen(nconf.get('PORT'), () => {
-  console.log(`Listening on port: ${nconf.get('PORT')}`);
   console.log(`Running in ${process.env.NODE_ENV}`);
+  console.log(`Listening on port: ${nconf.get('PORT')}`);
 });
