@@ -31,8 +31,8 @@ app.use(jwtAuthentication);
 app.get(
   '/auth/google',
   passport.authenticate('google', {
-    scope: ['profile', 'email']
-  })
+    scope: ['profile', 'email'],
+  }),
 );
 
 app.get(
@@ -43,16 +43,15 @@ app.get(
 
     // Make it a 5-year cookie
     const cookieExpirationDate = new Date(
-      Date.now() + 2 * 365 * 24 * 60 * 60 * 1000
+      Date.now() + 2 * 365 * 24 * 60 * 60 * 1000,
     );
 
     res.cookie(nconf.get('AUTH_TOKEN_KEY'), token, {
-      expires: cookieExpirationDate
+      expires: cookieExpirationDate,
     });
 
-    // TODO: fic this later
-    return res.redirect('http://localhost:50673');
-  }
+    return res.redirect('http://localhost:3000');
+  },
 );
 
 app.get('*', (req, res) => {

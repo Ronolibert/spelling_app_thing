@@ -7,13 +7,17 @@
     "cookies-js": "^1.2.3",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.0",
+    "material-ui": "^1.0.0-beta.30",
+    "material-ui-icons": "^1.0.0-beta.17",
     "mongoose": "^4.13.6",
     "nconf": "^0.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "styled-components": "^3.0.2"
   },
   "proxy": "http://localhost:5000",
   "scripts": {
