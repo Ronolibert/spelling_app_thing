@@ -6,8 +6,6 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
 
 const styles = {
   root: {
@@ -51,9 +49,5 @@ class Header extends Component {
     );
   }
 }
-{
-  /* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-  <MenuIcon />
-</IconButton>; */
-}
+
 export default withStyles(styles)(Header);

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AddVocabularCard from './AddVocabularyCard';
 import VocabularyCard from './VocabularyCard';
 import { googleGrey } from '../colors';
 
@@ -13,6 +14,7 @@ const WordBankContainer = styled.div`
 
 const WordBank = ({ data }) => (
   <WordBankContainer>
+    <AddVocabularCard />
     {data.map((card, i) => <VocabularyCard key={card.word} word={card.word} />)}
   </WordBankContainer>
 );
