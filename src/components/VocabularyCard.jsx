@@ -32,6 +32,11 @@ class VocabularyCard extends Component {
     window.speechSynthesis.speak(msg);
   };
 
+  stopReadingWord = word => {
+    window.speechSynthesis.cancel();
+    this.readWord(word);
+  };
+
   render() {
     const { word } = this.props;
     const { hovered } = this.state;
@@ -55,7 +60,13 @@ class VocabularyCard extends Component {
         >
           <CardContent>
             {hovered && (
-              <IconButton onClick={() => this.readWord(word)}>
+              <IconButton
+                onClick={() =>
+                  window.speechSynthesis.speaking
+                    ? this.stopReadingWord(word)
+                    : this.readWord(word)
+                }
+              >
                 <VolumeUp style={{ height: 45, width: 45 }} />
               </IconButton>
             )}
